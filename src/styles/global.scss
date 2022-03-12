@@ -1,0 +1,53 @@
+@import "./variables";
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@100;200;300;400;500;600;700;800;900&display=swap');
+/* font-family: 'Montserrat Alternates', sans-serif; */
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200;300;400;600;700;800;900&display=swap');
+/* font-family: 'Nunito Sans', sans-serif; */
+
+
+* {
+    margin: 0;
+    padding: 0;
+    outline: none;
+    box-sizing: border-box;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 1rem;
+    transition: all ease 0.1s;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+button{
+    cursor: pointer;
+}
+
+button:disabled{
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+
+/* width */
+::-webkit-scrollbar {
+    width: 2px;
+}
+
+  /* Track */
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+  /* Handle */
+::-webkit-scrollbar-thumb {
+    background: $color__primary; 
+    border-radius: 10px;
+}
+  /* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: $color__primary; 
+}

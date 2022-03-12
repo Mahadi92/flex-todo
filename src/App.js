@@ -1,24 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+import GroupTodo from './components/GroupTodo';
+import './styles/global.scss';
+import './styles/style.scss';
+
 
 function App() {
+  const [todoGroups, setTodoGroups] = useState([]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <main>
+      <header className="wrapper">
+        <div className="container">
+          <GroupTodo todoGroups={todoGroups} setTodoGroups={setTodoGroups} />
+        </div>
       </header>
-    </div>
+
+    </main>
   );
 }
 
