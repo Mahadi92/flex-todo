@@ -27,16 +27,17 @@
     gap: 2rem;
 }
 
-.grp_todo__form_container{
+.grp_add__form_container{
     @extend .grp_todo__add_btn;
     width: 20%;
+    height: 5rem;
     min-width: 15rem;
     position: relative;
     
-    .grp_todo__form{
+    .grp_add__form{
         width: 100%;
         display: flex;
-        .grp_todo__form_input{
+        .grp_add__form_input{
             width: 80%;
             display: block;
             border: none;
@@ -44,8 +45,8 @@
             padding: .5rem;
             border-radius: 5px;
         }
-        .grp_todo__form_btn{
-            @extend .grp_todo__form_input;
+        .grp_add__form_btn{
+            @extend .grp_add__form_input;
             width: 20%;
             display: block;
             margin-left: .3rem;
@@ -102,7 +103,8 @@
         }
     }
 }
-.grp_todo__form_container:hover .grp_todo__delete_btn{
+.grp_add__form_container:hover .grp_todo__delete_btn,
+    .grp_todo:hover .grp_todo__delete_btn{
     transform:scale(1);
 }
 
@@ -118,6 +120,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    cursor: pointer;
+    margin-bottom: 1rem;
     
     .grp_todo__title{
         display:block;
@@ -134,6 +138,41 @@
         border-radius: 5px;
     }
 }
+
+.grp_todo__form_container{
+    .grp_todo__form{
+        display: flex;
+        .grp_todo__form_input{
+            width: 60%;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 5px;
+        }
+        button{
+            width: 20%;
+            background: #fff;
+            border: none;
+            border-radius: 5px;
+            display: block;
+            font-size: .75rem;
+            margin-left: .3rem;
+            color: $color__primary;
+    
+            &:hover{
+                background: $color__primary;
+                color: #fff;
+            }
+        }
+    }
+
+}
+
+
+
+
+
+
+// Todo add
 .todo__add_btn{
     display: flex;
     justify-content: center;
