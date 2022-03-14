@@ -7,11 +7,6 @@ const GroupTodo = ({ todoGroups, setTodoGroups }) => {
     const [isAddGroup, setIsAddGroup] = useState(false);
     const [editGroupTodo, setEditGroupTodo] = useState(0);
 
-
-    useEffect(() => {
-        console.log("Root todoGroups", todoGroups)
-    }, [todoGroups])
-
     const handleGrpTodoSubmit = (e) => {
         e.preventDefault();
         const grpTitleValue = e.target.groupTodo.value

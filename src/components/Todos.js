@@ -10,10 +10,7 @@ const Todos = ({ todoGroup, todoGroups, setTodoGroups }) => {
     const [todos, setTodos] = useState(todoGroup.todoList)
     const [isAddTodo, setIsAddTodo] = useState(false)
 
-
-    console.log("todos >>>", todos)
-    console.log("todoGroup.todoList >>>>", todoGroup.todoList)
-    console.log("todoGroups >>>>", todoGroups)
+    const indexOfGroup = todoGroups.findIndex(group => group.id === todoGroup.id);
 
     const handleTodoSubmit = (e) => {
         e.preventDefault();
@@ -22,30 +19,30 @@ const Todos = ({ todoGroup, todoGroups, setTodoGroups }) => {
 
         setTodos((prev) => ([...prev, { id: (new Date()).getTime(), todoTitle: todoTitleValue }]));
 
-        // setTodoGroups([...todoGroups, { id: (new Date()).getTime(), grpTitle: grpTitleValue, todoList: [] }]);
 
-
-        var indexOfGroup = todoGroups.findIndex(group => group.id === todoGroup.id);
-        setTodoGroups((prev) => {
-            prev[indexOfGroup].todoList.push({ id: (new Date()).getTime(), todoTitle: todoTitleValue })
-
-            return [...prev]
-        })
-
-        // setTodoGroups([...todoGroups, todoGroups[indexOfGroup].todoList.push({ id: (new Date()).getTime(), todoTitle: todoTitleValue })]);
+        todoGroups[indexOfGroup].todoList.push({ id: (new Date()).getTime(), todoTitle: todoTitleValue })
 
         e.target.reset();
     }
 
+    const handleTodoDelete = (id) => {
+
+        const restTodos = todoGroups[indexOfGroup].todoList.filter(todo => todo.id !== id);
+        setTodos(restTodos);
+
+        console.log(">>>", restTodos)
+        todoGroups[indexOfGroup].todoList.splice(0, todoGroups[indexOfGroup].todoList.length, ...restTodos)
+
+    }
 
     return (
         <div>
-            {
-                todoGroup.todoList.map((todo, i) => {
+            {todoGroup.todoList.length > 0 &&
+                todoGroup.todoList?.map((todo, i) => {
                     return (
                         <div key={i} className="todo__card">
-                            <p>{todo}</p>
-                            <button className="todo__action_btn">
+                            <p>{todo.todoTitle}</p>
+                            <button className="todo__action_btn" onClick={(e) => handleTodoDelete(todo.id)}>
                                 <AiOutlineDelete />
                             </button>
                             <button className="todo__action_btn">
