@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FiPlus } from "react-icons/fi";
 import { HiX } from "react-icons/hi";
+import Todos from './Todos';
 
 const GroupTodo = ({ todoGroups, setTodoGroups }) => {
     const [isAddGroup, setIsAddGroup] = useState(false);
@@ -54,9 +55,7 @@ const GroupTodo = ({ todoGroups, setTodoGroups }) => {
                                 </div>
 
                             }
-                            <button className="todo__add_btn">
-                                <FiPlus size="20px" />
-                            </button>
+                            <Todos todoGroup={todoGroup} todoGroups={todoGroups} setTodoGroups={setTodoGroups} />
                         </div>
                     )
                 })

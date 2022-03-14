@@ -30,7 +30,6 @@
 .grp_add__form_container{
     @extend .grp_todo__add_btn;
     width: 20%;
-    height: 5rem;
     min-width: 15rem;
     position: relative;
     
@@ -61,6 +60,7 @@
 }
 
 .grp_todo__add_btn{
+    height: 5rem;
     background: $color__primary_400;
     display: flex;
     border: none;
@@ -122,7 +122,7 @@
     align-items: center;
     cursor: pointer;
     margin-bottom: 1rem;
-    
+
     .grp_todo__title{
         display:block;
         color: $color__dark;
@@ -191,4 +191,95 @@
     &:hover{
         background: $color__light;
     }
+}
+.todo__card{
+    width: 100%;
+    position: relative;
+    background: #FFF;
+    border-radius: 5px;
+    padding: 1rem;
+    margin: 0.5rem 0;
+    cursor: grab;
+
+    
+    &:hover .todo__action_btn{
+        transform:scale(1);
+    }
+}
+.todo__action_btn{
+    width: 2rem;
+    height: 2rem;
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0.2rem;
+    border: none;
+    border-radius:5px;
+    margin: 0.5rem;
+    color: $color__danger;
+    background: $color__primary_600;
+    padding: 0.5rem;
+    transform:scale(0);
+    
+    &:hover{
+        background: $color__danger;
+        color: #fff;
+    }
+    &:last-child{
+        right: 2.5rem;
+        transform:scale(0);
+        color: $color__primary;
+        &:hover{
+            background: $color__primary;
+            color: #fff;
+        }
+    }
+}
+
+.todo_add__form_container{
+    @extend .todo__card;
+    display: flex;
+    align-items: center;
+    padding: .5rem; 
+    
+    .todo_add__form{
+        width: 90%;
+        display: flex;
+        align-items: center;
+        input{
+            width: 80%;
+            border: none;
+            padding: .5rem;
+        }
+        button{
+            width: 30%;
+            height: 2rem;
+            display: block;
+            border: none;
+            border-radius:5px;
+            margin: 0.5rem;
+            color: $color__primary;
+            &:hover{
+                background: $color__primary;
+                color: #fff;
+            }
+        }
+    }
+
+    .todo__delete_btn{
+        width: 2rem;
+        height: 2rem;
+        display: block;
+        border: none;
+        border-radius:5px;
+        color: $color__danger;
+        background: $color__primary_600;
+        padding: 0.5rem;
+        
+        &:hover{
+            background: $color__danger;
+            color: #fff;
+        }
+    }
+
 }
