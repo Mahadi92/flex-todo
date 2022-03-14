@@ -11,7 +11,7 @@ const Todos = ({ todoGroup, todoGroups, setTodoGroups }) => {
     const [isAddTodo, setIsAddTodo] = useState(false)
 
 
-    // console.log("todos >>>", todos)
+    console.log("todos >>>", todos)
     console.log("todoGroup.todoList >>>>", todoGroup.todoList)
     console.log("todoGroups >>>>", todoGroups)
 
@@ -20,35 +20,17 @@ const Todos = ({ todoGroup, todoGroups, setTodoGroups }) => {
 
         const todoTitleValue = e.target.groupTodo.value;
 
-        var indexOfGroup = todoGroups.findIndex(group => group.id === todoGroup.id);
-
-
         setTodos((prev) => ([...prev, { id: (new Date()).getTime(), todoTitle: todoTitleValue }]));
 
         // setTodoGroups([...todoGroups, { id: (new Date()).getTime(), grpTitle: grpTitleValue, todoList: [] }]);
 
 
+        var indexOfGroup = todoGroups.findIndex(group => group.id === todoGroup.id);
         setTodoGroups((prev) => {
-            // prev[indexOfGroup].todoList.push({ id: (new Date()).getTime(), todoTitle: todoTitleValue })
+            prev[indexOfGroup].todoList.push({ id: (new Date()).getTime(), todoTitle: todoTitleValue })
 
-            console.log("prev >>>>>", prev[indexOfGroup])
             return [...prev]
         })
-
-
-
-        const a = [
-            {
-                id: 345,
-                grpTitle: "sdfgyy",
-                todoList: [
-                    {
-                        id: 3456,
-                        title: "sdfrt"
-                    }
-                ]
-            }
-        ]
 
         // setTodoGroups([...todoGroups, todoGroups[indexOfGroup].todoList.push({ id: (new Date()).getTime(), todoTitle: todoTitleValue })]);
 
