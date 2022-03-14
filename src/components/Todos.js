@@ -7,17 +7,50 @@ import { HiX } from "react-icons/hi";
 
 
 const Todos = ({ todoGroup, todoGroups, setTodoGroups }) => {
+    const [todos, setTodos] = useState(todoGroup.todoList)
     const [isAddTodo, setIsAddTodo] = useState(false)
+
+
+    // console.log("todos >>>", todos)
+    console.log("todoGroup.todoList >>>>", todoGroup.todoList)
+    console.log("todoGroups >>>>", todoGroups)
 
     const handleTodoSubmit = (e) => {
         e.preventDefault();
-        const todoTitleValue = e.target.groupTodo.value
+
+        const todoTitleValue = e.target.groupTodo.value;
 
         var indexOfGroup = todoGroups.findIndex(group => group.id === todoGroup.id);
 
-        console.log(indexOfGroup)
 
-        setTodoGroups([...todoGroups, todoGroups[indexOfGroup].todoList.push({ id: (new Date()).getTime(), todoTitle: todoTitleValue })]);
+        setTodos((prev) => ([...prev, { id: (new Date()).getTime(), todoTitle: todoTitleValue }]));
+
+        // setTodoGroups([...todoGroups, { id: (new Date()).getTime(), grpTitle: grpTitleValue, todoList: [] }]);
+
+
+        setTodoGroups((prev) => {
+            // prev[indexOfGroup].todoList.push({ id: (new Date()).getTime(), todoTitle: todoTitleValue })
+
+            console.log("prev >>>>>", prev[indexOfGroup])
+            return [...prev]
+        })
+
+
+
+        const a = [
+            {
+                id: 345,
+                grpTitle: "sdfgyy",
+                todoList: [
+                    {
+                        id: 3456,
+                        title: "sdfrt"
+                    }
+                ]
+            }
+        ]
+
+        // setTodoGroups([...todoGroups, todoGroups[indexOfGroup].todoList.push({ id: (new Date()).getTime(), todoTitle: todoTitleValue })]);
 
         e.target.reset();
     }
@@ -26,9 +59,9 @@ const Todos = ({ todoGroup, todoGroups, setTodoGroups }) => {
     return (
         <div>
             {
-                todoGroup.todoList.map(todo => {
+                todoGroup.todoList.map((todo, i) => {
                     return (
-                        <div className="todo__card">
+                        <div key={i} className="todo__card">
                             <p>{todo}</p>
                             <button className="todo__action_btn">
                                 <AiOutlineDelete />
@@ -42,7 +75,7 @@ const Todos = ({ todoGroup, todoGroups, setTodoGroups }) => {
             }
 
             {
-                !isAddTodo ?
+                isAddTodo ?
                     <button className="todo__add_btn" onClick={() => setIsAddTodo(true)}>
                         <FiPlus size="20px" />
                     </button>

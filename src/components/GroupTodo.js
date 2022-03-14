@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FiPlus } from "react-icons/fi";
 import { HiX } from "react-icons/hi";
 import Todos from './Todos';
@@ -7,12 +7,16 @@ const GroupTodo = ({ todoGroups, setTodoGroups }) => {
     const [isAddGroup, setIsAddGroup] = useState(false);
     const [editGroupTodo, setEditGroupTodo] = useState(0);
 
+
+    useEffect(() => {
+        console.log("Root todoGroups", todoGroups)
+    }, [todoGroups])
+
     const handleGrpTodoSubmit = (e) => {
         e.preventDefault();
         const grpTitleValue = e.target.groupTodo.value
 
-        setTodoGroups([...todoGroups, { id: (new Date()).getTime(), grpTitle: grpTitleValue, todoList: [] }]);
-
+        setTodoGroups((prev) => [...prev, { id: (new Date()).getTime(), grpTitle: grpTitleValue, todoList: [] }]);
         e.target.reset();
     }
 
@@ -62,7 +66,7 @@ const GroupTodo = ({ todoGroups, setTodoGroups }) => {
             }
 
             {
-                !isAddGroup ?
+                isAddGroup ?
                     <button onClick={() => setIsAddGroup(true)} className="grp_todo__add_btn">
                         <FiPlus size="20px" />
                         <span>Add Todo Group </span>
