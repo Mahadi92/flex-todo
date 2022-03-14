@@ -6,7 +6,7 @@ import { HiX } from "react-icons/hi";
 
 
 
-const Todos = ({ todoGroup, todoGroups, setTodoGroups }) => {
+const Todos = ({ todoGroup, todoGroups, grpI, dragging, handleDragStart, handleDragEnter, dragStyles }) => {
     const [todos, setTodos] = useState(todoGroup.todoList)
     const [isAddTodo, setIsAddTodo] = useState(false);
     const [isEditTodo, setIsEditTodo] = useState(false);
@@ -49,11 +49,17 @@ const Todos = ({ todoGroup, todoGroups, setTodoGroups }) => {
     return (
         <div>
             {todoGroup.todoList.length > 0 &&
-                todoGroup.todoList?.map((todo, i) => {
+                todoGroup.todoList?.map((todo, todoI) => {
                     return (
-                        <div key={i}>
-                            {!isEditTodo ?
-                                <div className="todo__card" onDoubleClick={() => setIsEditTodo(true)}>
+                        <div key={todoI}>
+                            {!isEditTodo && todoI ?
+                                <div
+                                    className={dragging ? dragStyles({ grpI, todoI }) : "todo__card"}
+                                    draggable
+                                    onDragStart={(e) => handleDragStart(e, { grpI, todoI })}
+                                    onDragEnter={(e) => dragging ? handleDragEnter(e, { grpI, todoI }) : null}
+                                    onDoubleClick={() => setIsEditTodo(true)}
+                                >
                                     <p>{todo.todoTitle}</p>
                                     <button className="todo__action_btn" onClick={(e) => handleDeleteTodo(todo.id)}>
                                         <AiOutlineDelete />
@@ -77,7 +83,7 @@ const Todos = ({ todoGroup, todoGroups, setTodoGroups }) => {
             }
 
             {
-                isAddTodo ?
+                !isAddTodo ?
                     <button className="todo__add_btn" onClick={() => setIsAddTodo(true)}>
                         <FiPlus size="20px" />
                     </button>

@@ -206,6 +206,16 @@
         transform:scale(1);
     }
 }
+.current_todo__card{
+    background: $color__primary_600;
+    color: $color__primary_600;
+    cursor: grabbing;
+
+    button{
+        color: $color__primary_600;
+    }
+
+}
 .todo__action_btn{
     width: 2rem;
     height: 2rem;

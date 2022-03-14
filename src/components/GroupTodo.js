@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { FiPlus } from "react-icons/fi";
 import { HiX } from "react-icons/hi";
 import Todos from './Todos';
@@ -10,8 +10,44 @@ const GroupTodo = ({ todoGroups, setTodoGroups }) => {
 
 
     // Drag and Drop Functions 
+    const dragItem = useRef();
+    const dragNode = useRef();
 
 
+    const handleDragStart = (e, params) => {
+        dragItem.current = params;
+        dragNode.current = e.target;
+        dragNode.current.addEventListener('dragend', handleDragEnd)
+        setTimeout(() => {
+            setDragging(true);
+        }, 0)
+    }
+    const handleDragEnd = () => {
+        setDragging(false);
+        dragNode.current.removeEventListener('dragend', handleDragEnd)
+        dragItem.current = null;
+        dragNode.current = null;
+    }
+
+    const handleDragEnter = (e, params) => {
+        const currentItem = dragItem.current;
+        if (e.target !== dragNode.current) {
+            setTodoGroups((oldList) => {
+                let newList = JSON.parse(JSON.stringify(oldList));
+                newList[params.grpI].todoList.splice(params.todoI, 0, newList[currentItem.grpI].todoList.splice(currentItem.todoI, 1)[0]);
+                dragItem.current = params;
+                return newList
+            })
+        }
+    }
+
+    const dragStyles = (params) => {
+        const currentItem = dragItem.current;
+        if (currentItem.grpI === params.grpI && currentItem.todoI === params.todoI) {
+            return "current_todo__card todo__card"
+        }
+        return "todo__card"
+    }
 
 
     // group todo CRUD functions 
@@ -48,7 +84,11 @@ const GroupTodo = ({ todoGroups, setTodoGroups }) => {
             {todoGroups.length > 0 &&
                 todoGroups.map((todoGroup, grpI) => {
                     return (
-                        <div key={grpI} className="grp_todo">
+                        <div key={grpI}
+                            className="grp_todo"
+                            onDragEnter={dragging && !todoGroup.todoList.length ? (e) => handleDragEnter(e, { grpI, todoI: 0 }) : null}
+
+                        >
                             <button onClick={(e) => handleDeleteGroupTodo(todoGroup?.id)} className="grp_todo__delete_btn"><HiX /> </button>
                             {editGroupTodo === todoGroup.id ?
 
@@ -67,14 +107,14 @@ const GroupTodo = ({ todoGroups, setTodoGroups }) => {
                                 </div>
 
                             }
-                            <Todos todoGroup={todoGroup} todoGroups={todoGroups} setTodoGroups={setTodoGroups} />
+                            <Todos todoGroup={todoGroup} todoGroups={todoGroups} grpI={grpI} dragging={dragging} handleDragStart={handleDragStart} handleDragEnter={handleDragEnter} dragStyles={dragStyles} />
                         </div>
                     )
                 })
             }
 
             {
-                isAddGroup ?
+                !isAddGroup ?
                     <button onClick={() => setIsAddGroup(true)} className="grp_todo__add_btn">
                         <FiPlus size="20px" />
                         <span>Add Todo Group </span>
