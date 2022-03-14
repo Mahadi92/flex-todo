@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { FiPlus } from "react-icons/fi";
 import { HiX } from "react-icons/hi";
 import Todos from './Todos';
@@ -6,7 +6,17 @@ import Todos from './Todos';
 const GroupTodo = ({ todoGroups, setTodoGroups }) => {
     const [isAddGroup, setIsAddGroup] = useState(false);
     const [editGroupTodo, setEditGroupTodo] = useState(0);
+    const [dragging, setDragging] = useState(false)
 
+
+    // Drag and Drop Functions 
+
+
+
+
+    // group todo CRUD functions 
+
+    // Add Todo Groups
     const handleGrpTodoSubmit = (e) => {
         e.preventDefault();
         const grpTitleValue = e.target.groupTodo.value
@@ -15,10 +25,13 @@ const GroupTodo = ({ todoGroups, setTodoGroups }) => {
         e.target.reset();
     }
 
+    // Delete Todo group
     const handleDeleteGroupTodo = (id) => {
         const restTodoGroups = todoGroups.filter(todo => todo.id !== id);
         setTodoGroups(restTodoGroups)
     }
+
+    // Edit Todo group
     const handleEditGroupTodo = (e, id, list) => {
         e.preventDefault();
         const value = e.target.editGroupTodo.value;

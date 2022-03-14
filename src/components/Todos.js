@@ -8,11 +8,13 @@ import { HiX } from "react-icons/hi";
 
 const Todos = ({ todoGroup, todoGroups, setTodoGroups }) => {
     const [todos, setTodos] = useState(todoGroup.todoList)
-    const [isAddTodo, setIsAddTodo] = useState(false)
+    const [isAddTodo, setIsAddTodo] = useState(false);
+    const [isEditTodo, setIsEditTodo] = useState(false);
 
     const indexOfGroup = todoGroups.findIndex(group => group.id === todoGroup.id);
 
-    const handleTodoSubmit = (e) => {
+    // Add todo
+    const handleAddTodo = (e) => {
         e.preventDefault();
 
         const todoTitleValue = e.target.groupTodo.value;
@@ -25,14 +27,23 @@ const Todos = ({ todoGroup, todoGroups, setTodoGroups }) => {
         e.target.reset();
     }
 
-    const handleTodoDelete = (id) => {
+    // Delete todo
+    const handleDeleteTodo = (id) => {
 
         const restTodos = todoGroups[indexOfGroup].todoList.filter(todo => todo.id !== id);
         setTodos(restTodos);
 
-        console.log(">>>", restTodos)
         todoGroups[indexOfGroup].todoList.splice(0, todoGroups[indexOfGroup].todoList.length, ...restTodos)
+    }
 
+    // Edit todo
+    const handleEditTodo = (e, id) => {
+        e.preventDefault();
+        const value = e.target.todo.value;
+        const indexOfTodo = todoGroup.todoList.findIndex(todo => todo.id === id);
+
+        todoGroups[indexOfGroup].todoList[indexOfTodo] = { id: id, todoTitle: value };
+        setIsEditTodo(false);
     }
 
     return (
@@ -40,14 +51,26 @@ const Todos = ({ todoGroup, todoGroups, setTodoGroups }) => {
             {todoGroup.todoList.length > 0 &&
                 todoGroup.todoList?.map((todo, i) => {
                     return (
-                        <div key={i} className="todo__card">
-                            <p>{todo.todoTitle}</p>
-                            <button className="todo__action_btn" onClick={(e) => handleTodoDelete(todo.id)}>
-                                <AiOutlineDelete />
-                            </button>
-                            <button className="todo__action_btn">
-                                <FiEdit />
-                            </button>
+                        <div key={i}>
+                            {!isEditTodo ?
+                                <div className="todo__card" onDoubleClick={() => setIsEditTodo(true)}>
+                                    <p>{todo.todoTitle}</p>
+                                    <button className="todo__action_btn" onClick={(e) => handleDeleteTodo(todo.id)}>
+                                        <AiOutlineDelete />
+                                    </button>
+                                    <button className="todo__action_btn" onClick={() => setIsEditTodo(true)}>
+                                        <FiEdit />
+                                    </button>
+                                </div>
+                                :
+                                <div className="todo_add__form_container">
+                                    <form onSubmit={(e) => handleEditTodo(e, todo.id)} className="todo_add__form">
+                                        <input type="text" defaultValue={todo.todoTitle} name="todo" className="todo_add__form_input" placeholder="Todo " required />
+                                        <button type="submit" className="grp_todo__form_btn">Update</button>
+                                    </form>
+                                    <button onClick={() => setIsEditTodo(false)} className="grp_todo__form_btn">Cancel</button>
+                                </div>
+                            }
                         </div>
                     )
                 })
@@ -60,7 +83,7 @@ const Todos = ({ todoGroup, todoGroups, setTodoGroups }) => {
                     </button>
                     :
                     <div className="todo_add__form_container">
-                        <form onSubmit={(e) => handleTodoSubmit(e)} className="todo_add__form">
+                        <form onSubmit={(e) => handleAddTodo(e)} className="todo_add__form">
                             <input type="text" name="groupTodo" className="todo_add__form_input" placeholder="Todo " required />
                             <button type="submit" className="todo_add__form_btn">Add</button>
                         </form>

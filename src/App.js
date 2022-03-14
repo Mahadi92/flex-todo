@@ -10,19 +10,19 @@ const defaultData = [
     todoList: [
       {
         id: 0,
-        title: "Coding"
+        todoTitle: "Coding"
       },
       {
         id: 1,
-        title: "Gaming"
+        todoTitle: "Gaming"
       },
       {
         id: 2,
-        title: "Jumping"
+        todoTitle: "Jumping"
       },
       {
         id: 3,
-        title: "Running"
+        todoTitle: "Running"
       },
     ]
   },
@@ -32,11 +32,11 @@ const defaultData = [
     todoList: [
       {
         id: 0,
-        title: "Yoga"
+        todoTitle: "Yoga"
       },
       {
         id: 1,
-        title: "song"
+        todoTitle: "song"
       }
     ]
   },
@@ -46,14 +46,14 @@ const defaultData = [
     todoList: [
       {
         id: 0,
-        title: "sleep"
+        todoTitle: "sleep"
       }
     ]
   }
 ]
 
 function App() {
-  const [todoGroups, setTodoGroups] = useState([]);
+  const [todoGroups, setTodoGroups] = useState(defaultData);
 
   return (
     <main>
