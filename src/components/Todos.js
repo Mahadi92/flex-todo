@@ -7,7 +7,7 @@ import { ImCancelCircle } from "react-icons/im";
 import { VscLock } from "react-icons/vsc";
 import { VscUnlock } from "react-icons/vsc";
 import { HiLockClosed } from 'react-icons/hi';
-// import { MdDragIndicator } from 'react-icons/hi';
+import { MdDragIndicator } from 'react-icons/hi';
 
 
 
