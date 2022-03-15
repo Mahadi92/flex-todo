@@ -7,11 +7,11 @@ import { ImCancelCircle } from "react-icons/im";
 import { VscLock } from "react-icons/vsc";
 import { VscUnlock } from "react-icons/vsc";
 import { HiLockClosed } from 'react-icons/hi';
+// import { MdDragIndicator } from 'react-icons/hi';
 
 
 
 const Todos = ({ todoGroup, todoGroups, grpI, dragging, handleDragStart, handleDragEnter, dragStyles }) => {
-    const [todos, setTodos] = useState(todoGroup.todoList)
     const [isAddTodo, setIsAddTodo] = useState(false);
     const [editTodo, setEditTodo] = useState(0);
     const [isDraggable, setIsDraggable] = useState([])
@@ -24,9 +24,6 @@ const Todos = ({ todoGroup, todoGroups, grpI, dragging, handleDragStart, handleD
 
         const todoTitleValue = e.target.groupTodo.value;
 
-        setTodos((prev) => ([...prev, { id: (new Date()).getTime(), todoTitle: todoTitleValue }]));
-
-
         todoGroups[indexOfGroup].todoList.push({ id: (new Date()).getTime(), todoTitle: todoTitleValue })
 
         e.target.reset();
@@ -36,7 +33,6 @@ const Todos = ({ todoGroup, todoGroups, grpI, dragging, handleDragStart, handleD
     const handleDeleteTodo = (id) => {
 
         const restTodos = todoGroups[indexOfGroup].todoList.filter(todo => todo.id !== id);
-        setTodos(restTodos);
 
         todoGroups[indexOfGroup].todoList.splice(0, todoGroups[indexOfGroup].todoList.length, ...restTodos)
     }
