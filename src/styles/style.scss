@@ -207,12 +207,12 @@
     }
 }
 .current_todo__card{
-    background: $color__primary_600;
-    color: $color__primary_600;
+    background: $color__primary_400;
+    color: $color__primary_400;
     cursor: grabbing;
 
     button{
-        color: $color__primary_600;
+        color: $color__primary_400;
     }
 
 }
@@ -246,6 +246,7 @@
     }
 }
 
+
 .todo_add__form_container{
     @extend .todo__card;
     display: flex;
@@ -261,18 +262,39 @@
             border: none;
             padding: .5rem;
         }
+        .todo_add__form_btn,
+        .todo__delete_btn,
         button{
             width: 30%;
             height: 2rem;
             display: block;
             border: none;
             border-radius:5px;
-            margin: 0.5rem;
+            margin: 0 0.3rem;
             color: $color__primary;
             &:hover{
                 background: $color__primary;
                 color: #fff;
             }
+        }
+        .todo__edit_form_btn{
+            min-width: 3.6rem;
+        }
+    }
+    .todo__edit_form_del_btn{
+        display: block;
+        border: none;
+        color: $color__primary;
+        height: 2rem;
+        padding: 0.2rem 0.2rem;
+        display: flex;
+        justify-content:center;
+        align-items:center;
+        border-radius:5px;
+
+        &:hover{
+            background: $color__primary;
+            color: #fff;
         }
     }
 
@@ -291,5 +313,4 @@
             color: #fff;
         }
     }
-
 }

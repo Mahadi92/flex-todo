@@ -53,7 +53,7 @@ const defaultData = [
 ]
 
 function App() {
-  const [todoGroups, setTodoGroups] = useState(defaultData);
+  const [todoGroups, setTodoGroups] = useState([]);
 
   return (
     <main>

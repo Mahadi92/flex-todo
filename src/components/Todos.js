@@ -3,13 +3,14 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { FiEdit } from "react-icons/fi";
 import { FiPlus } from "react-icons/fi";
 import { HiX } from "react-icons/hi";
+import { ImCancelCircle } from "react-icons/im";
 
 
 
 const Todos = ({ todoGroup, todoGroups, grpI, dragging, handleDragStart, handleDragEnter, dragStyles }) => {
     const [todos, setTodos] = useState(todoGroup.todoList)
     const [isAddTodo, setIsAddTodo] = useState(false);
-    const [isEditTodo, setIsEditTodo] = useState(false);
+    const [editTodo, setEditTodo] = useState(0);
 
     const indexOfGroup = todoGroups.findIndex(group => group.id === todoGroup.id);
 
@@ -43,7 +44,7 @@ const Todos = ({ todoGroup, todoGroups, grpI, dragging, handleDragStart, handleD
         const indexOfTodo = todoGroup.todoList.findIndex(todo => todo.id === id);
 
         todoGroups[indexOfGroup].todoList[indexOfTodo] = { id: id, todoTitle: value };
-        setIsEditTodo(false);
+        setEditTodo(0);
     }
 
     return (
@@ -52,29 +53,30 @@ const Todos = ({ todoGroup, todoGroups, grpI, dragging, handleDragStart, handleD
                 todoGroup.todoList?.map((todo, todoI) => {
                     return (
                         <div key={todoI}>
-                            {!isEditTodo && todoI ?
+                            {todo.id !== editTodo ?
                                 <div
                                     className={dragging ? dragStyles({ grpI, todoI }) : "todo__card"}
                                     draggable
                                     onDragStart={(e) => handleDragStart(e, { grpI, todoI })}
                                     onDragEnter={(e) => dragging ? handleDragEnter(e, { grpI, todoI }) : null}
-                                    onDoubleClick={() => setIsEditTodo(true)}
+                                    onDoubleClick={() => setEditTodo(todo.id)}
                                 >
+
                                     <p>{todo.todoTitle}</p>
                                     <button className="todo__action_btn" onClick={(e) => handleDeleteTodo(todo.id)}>
                                         <AiOutlineDelete />
                                     </button>
-                                    <button className="todo__action_btn" onClick={() => setIsEditTodo(true)}>
+                                    <button className="todo__action_btn" onClick={() => setEditTodo(todo.id)}>
                                         <FiEdit />
                                     </button>
                                 </div>
                                 :
                                 <div className="todo_add__form_container">
                                     <form onSubmit={(e) => handleEditTodo(e, todo.id)} className="todo_add__form">
-                                        <input type="text" defaultValue={todo.todoTitle} name="todo" className="todo_add__form_input" placeholder="Todo " required />
-                                        <button type="submit" className="grp_todo__form_btn">Update</button>
+                                        <input type="text" defaultValue={todo.todoTitle} name="todo" className="todo_add__form_input" placeholder="Update title" required />
+                                        <button type="submit" className="todo__edit_form_btn">Update</button>
                                     </form>
-                                    <button onClick={() => setIsEditTodo(false)} className="grp_todo__form_btn">Cancel</button>
+                                    <button onClick={() => setEditTodo(0)} className="todo__edit_form_del_btn"><ImCancelCircle /></button>
                                 </div>
                             }
                         </div>
@@ -90,7 +92,7 @@ const Todos = ({ todoGroup, todoGroups, grpI, dragging, handleDragStart, handleD
                     :
                     <div className="todo_add__form_container">
                         <form onSubmit={(e) => handleAddTodo(e)} className="todo_add__form">
-                            <input type="text" name="groupTodo" className="todo_add__form_input" placeholder="Todo " required />
+                            <input type="text" name="groupTodo" className="todo_add__form_input" placeholder="Enter title" required />
                             <button type="submit" className="todo_add__form_btn">Add</button>
                         </form>
                         <button onClick={() => setIsAddTodo(false)} className="todo__delete_btn"><HiX /> </button>

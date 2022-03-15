@@ -15,6 +15,11 @@ const GroupTodo = ({ todoGroups, setTodoGroups }) => {
 
 
     const handleDragStart = (e, params) => {
+        // let currentContext;
+        // this.style.opacity = '0.3';
+        // currentContext = this;
+
+        console.log(e, this);
         dragItem.current = params;
         dragNode.current = e.target;
         dragNode.current.addEventListener('dragend', handleDragEnd)
@@ -75,7 +80,6 @@ const GroupTodo = ({ todoGroups, setTodoGroups }) => {
         const foundTodoIndex = todoGroups.findIndex(todo => todo.id === id);
         todoGroups[foundTodoIndex] = { id: id, grpTitle: value, todoList: list };
         setEditGroupTodo(0)
-        console.log(todoGroups)
     }
 
     return (
@@ -103,7 +107,7 @@ const GroupTodo = ({ todoGroups, setTodoGroups }) => {
                                 :
                                 <div onDoubleClick={(e) => setEditGroupTodo(todoGroup.id)} className="grp_todo__title_container">
                                     <span className="grp_todo__title">{todoGroup.grpTitle}</span>
-                                    <span className="grp_todo__length">{todoGroup.todoList?.length}</span>
+                                    <span className="grp_todo__length">{todoGroup.todoList.length}</span>
                                 </div>
 
                             }
