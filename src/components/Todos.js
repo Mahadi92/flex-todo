@@ -7,12 +7,13 @@ import { ImCancelCircle } from "react-icons/im";
 import { VscLock } from "react-icons/vsc";
 import { VscUnlock } from "react-icons/vsc";
 import { HiLockClosed } from 'react-icons/hi';
-import { MdDragIndicator } from 'react-icons/hi';
+// import { MdDragIndicator } from 'react-icons/hi';
 
 
 
 const Todos = ({ todoGroup, todoGroups, grpI, dragging, handleDragStart, handleDragEnter, dragStyles }) => {
     const [todos, setTodos] = useState(todoGroup.todoList)
+    console.log("todos >>>", todos);
     const [isAddTodo, setIsAddTodo] = useState(false);
     const [editTodo, setEditTodo] = useState(0);
     const [isDraggable, setIsDraggable] = useState([])
