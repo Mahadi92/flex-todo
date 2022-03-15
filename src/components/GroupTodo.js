@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { FiPlus } from "react-icons/fi";
 import { HiX } from "react-icons/hi";
+import { FiEdit } from "react-icons/fi";
 import Todos from './Todos';
 
 const GroupTodo = ({ todoGroups, setTodoGroups }) => {
@@ -15,11 +16,6 @@ const GroupTodo = ({ todoGroups, setTodoGroups }) => {
 
 
     const handleDragStart = (e, params) => {
-        // let currentContext;
-        // this.style.opacity = '0.3';
-        // currentContext = this;
-
-        console.log(e, this);
         dragItem.current = params;
         dragNode.current = e.target;
         dragNode.current.addEventListener('dragend', handleDragEnd)
@@ -39,13 +35,14 @@ const GroupTodo = ({ todoGroups, setTodoGroups }) => {
         if (e.target !== dragNode.current) {
             setTodoGroups((oldList) => {
                 let newList = JSON.parse(JSON.stringify(oldList));
-                newList[params.grpI].todoList.splice(params.todoI, 0, newList[currentItem.grpI].todoList.splice(currentItem.todoI, 1)[0]);
+                newList[params.grpI].todoList.splice(params.todoI, 0, newList[currentItem.grpI].todoList.splice(currentItem.todoI, 1)[0]); //Main array element switching logic
                 dragItem.current = params;
                 return newList
             })
         }
     }
 
+    // Dragging time bg styles func
     const dragStyles = (params) => {
         const currentItem = dragItem.current;
         if (currentItem.grpI === params.grpI && currentItem.todoI === params.todoI) {
@@ -91,9 +88,9 @@ const GroupTodo = ({ todoGroups, setTodoGroups }) => {
                         <div key={grpI}
                             className="grp_todo"
                             onDragEnter={dragging && !todoGroup.todoList.length ? (e) => handleDragEnter(e, { grpI, todoI: 0 }) : null}
-
                         >
-                            <button onClick={(e) => handleDeleteGroupTodo(todoGroup?.id)} className="grp_todo__delete_btn"><HiX /> </button>
+                            <button onClick={() => handleDeleteGroupTodo(todoGroup?.id)} className="grp_todo__delete_btn"><HiX /> </button>
+                            <button onClick={() => setEditGroupTodo(todoGroup.id)} className="grp_todo__edit_btn"><FiEdit /> </button>
                             {editGroupTodo === todoGroup.id ?
 
                                 // Update Group todo title
@@ -111,7 +108,7 @@ const GroupTodo = ({ todoGroups, setTodoGroups }) => {
                                 </div>
 
                             }
-                            <Todos todoGroup={todoGroup} todoGroups={todoGroups} grpI={grpI} dragging={dragging} handleDragStart={handleDragStart} handleDragEnter={handleDragEnter} dragStyles={dragStyles} />
+                            <Todos todoGroup={todoGroup} todoGroups={todoGroups} grpI={grpI} dragging={dragging} setDragging={setDragging} handleDragStart={handleDragStart} handleDragEnter={handleDragEnter} dragStyles={dragStyles} />
                         </div>
                     )
                 })

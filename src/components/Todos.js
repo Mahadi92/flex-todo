@@ -4,6 +4,9 @@ import { FiEdit } from "react-icons/fi";
 import { FiPlus } from "react-icons/fi";
 import { HiX } from "react-icons/hi";
 import { ImCancelCircle } from "react-icons/im";
+import { VscLock } from "react-icons/vsc";
+import { VscUnlock } from "react-icons/vsc";
+import { HiLockClosed } from 'react-icons/hi';
 
 
 
@@ -11,6 +14,7 @@ const Todos = ({ todoGroup, todoGroups, grpI, dragging, handleDragStart, handleD
     const [todos, setTodos] = useState(todoGroup.todoList)
     const [isAddTodo, setIsAddTodo] = useState(false);
     const [editTodo, setEditTodo] = useState(0);
+    const [isDraggable, setIsDraggable] = useState([])
 
     const indexOfGroup = todoGroups.findIndex(group => group.id === todoGroup.id);
 
@@ -56,13 +60,32 @@ const Todos = ({ todoGroup, todoGroups, grpI, dragging, handleDragStart, handleD
                             {todo.id !== editTodo ?
                                 <div
                                     className={dragging ? dragStyles({ grpI, todoI }) : "todo__card"}
-                                    draggable
-                                    onDragStart={(e) => handleDragStart(e, { grpI, todoI })}
+                                    draggable={isDraggable.includes(todo.id) ? false : true}
+                                    onDragStart={(e) => (isDraggable.includes(todo.id) ? null : handleDragStart(e, { grpI, todoI }))}
                                     onDragEnter={(e) => dragging ? handleDragEnter(e, { grpI, todoI }) : null}
                                     onDoubleClick={() => setEditTodo(todo.id)}
                                 >
+                                    {isDraggable.includes(todo.id) &&
+                                        <span className="todo__lock_indicator">
+                                            <HiLockClosed size="12px" />
+                                        </span>
+                                    }
+
+                                    {/*<<<<< Lock and Unlock Button >>>>>>>>> */}
+                                    {isDraggable.includes(todo.id) ?
+                                        <button className="todo__lock_btn" onClick={() => setIsDraggable((prev) => (prev.filter(id => id !== todo.id)))}>
+                                            <VscLock />
+                                        </button>
+                                        :
+                                        <button className="todo__lock_btn" onClick={() => setIsDraggable((prev) => ([...prev, todo.id]))}>
+                                            <VscUnlock />
+                                        </button>
+
+                                    }
 
                                     <p>{todo.todoTitle}</p>
+
+                                    {/*<<<<< Delete and Edit single todo Button >>>>>>>>> */}
                                     <button className="todo__action_btn" onClick={(e) => handleDeleteTodo(todo.id)}>
                                         <AiOutlineDelete />
                                     </button>
