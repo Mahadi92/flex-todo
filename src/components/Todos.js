@@ -61,6 +61,7 @@ const Todos = ({ todoGroup, todoGroups, grpI, dragging, handleDragStart, handleD
                                     onDragStart={(e) => (isDraggable.includes(todo.id) ? null : handleDragStart(e, { grpI, todoI }))}
                                     onDragEnter={(e) => dragging ? handleDragEnter(e, { grpI, todoI }) : null}
                                     onDoubleClick={() => setEditTodo(todo.id)}
+                                    title="Double click to edit todo"
                                 >
                                     {isDraggable.includes(todo.id) ?
                                         <span className="todo__lock_indicator">
