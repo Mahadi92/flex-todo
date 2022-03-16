@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import GroupTodo from './components/GroupTodo';
 import './styles/global.scss';
 import './styles/style.scss';
