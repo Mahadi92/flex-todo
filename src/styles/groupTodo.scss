@@ -1,0 +1,164 @@
+@import "./variables.scss";
+
+// Group todo style
+.grp_todo__container{
+    display: flex;
+    gap: 2rem;
+}
+
+.grp_add__form_container{
+    @extend .grp_todo__add_btn;
+    width: 20%;
+    min-width: 20rem;
+    position: relative;
+    
+    .grp_add__form{
+        width: 100%;
+        display: flex;
+        .grp_add__form_input{
+            width: 80%;
+            display: block;
+            border: none;
+            background: $color__light;
+            padding: 0.8rem 0.5rem;
+            border-radius: 5px;
+        }
+        .grp_add__form_btn{
+            @extend .grp_add__form_input;
+            width: 20%;
+            display: block;
+            margin-left: .3rem;
+            color: $color__primary;
+    
+            &:hover{
+                background: $color__primary;
+                color: #fff;
+            }
+        }
+    }
+}
+
+.grp_todo__add_btn{
+    height: 5rem;
+    background: $color__primary_400;
+    display: flex;
+    border: none;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 10px;
+
+    span{
+        padding-left: .5rem;
+        color: $color__dark;
+        font-weight: 600;
+    }
+    svg{
+        color: $color__primary;
+    }
+}
+
+.grp_todo__delete_btn{
+    position: absolute;
+    transform:scale(0);
+    top: -0.5rem;
+    right: -0.5rem;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    box-shadow: 0px 0px 5px 1px #ddd;
+    background: $color__primary_600;
+    
+    svg{
+        color: $color__danger;
+    }
+    &:hover{
+        background: $color__danger;
+        svg{
+            color: #fff;
+        }
+    }
+}
+
+.grp_todo__edit_btn{
+    @extend .grp_todo__delete_btn;
+    // top: -0.5rem;
+    right: 2rem;
+
+    svg{
+        color: $color__primary;
+    }
+    &:hover{
+        background: $color__primary;
+        svg{
+            color: #fff;
+        }
+    }
+}
+
+.grp_add__form_container:hover .grp_todo__delete_btn,
+    .grp_todo:hover .grp_todo__delete_btn{
+    transform:scale(1);
+}
+
+.grp_todo{
+    width: 20%;
+    min-width: 20rem;
+    position: relative;
+    background: $color__primary_400;
+    padding: 1rem;
+    border-radius: 10px;
+}
+.grp_todo__title_container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 1rem;
+
+    .grp_todo__title{
+        display:block;
+        color: $color__dark;
+        font-weight: 600;
+        font-size: 1.2rem;
+        text-transform: capitalize;
+    }
+    .grp_todo__length{
+        display:block;
+        background: $color__primary_600;
+        color: $color__primary;
+        padding: .3rem .6rem;
+        border-radius: 5px;
+    }
+}
+
+.grp_todo__form_container{
+    .grp_todo__form{
+        display: flex;
+        .grp_todo__form_input{
+            width: 60%;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 5px;
+        }
+        button{
+            width: 20%;
+            background: #fff;
+            border: none;
+            border-radius: 5px;
+            display: block;
+            font-size: .75rem;
+            margin-left: .3rem;
+            color: $color__primary;
+    
+            &:hover{
+                background: $color__primary;
+                color: #fff;
+            }
+        }
+    }
+
+}

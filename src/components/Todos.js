@@ -7,7 +7,7 @@ import { ImCancelCircle } from "react-icons/im";
 import { VscLock } from "react-icons/vsc";
 import { VscUnlock } from "react-icons/vsc";
 import { HiLockClosed } from 'react-icons/hi';
-// import { MdDragIndicator } from 'react-icons/hi';
+import { MdDragIndicator } from 'react-icons/md';
 
 
 
@@ -25,12 +25,8 @@ const Todos = ({ todoGroup, todoGroups, grpI, dragging, handleDragStart, handleD
         e.preventDefault();
 
         const todoTitleValue = e.target.groupTodo.value;
-
         setTodos((prev) => ([...prev, { id: (new Date()).getTime(), todoTitle: todoTitleValue }]));
-
-
         todoGroups[indexOfGroup].todoList.push({ id: (new Date()).getTime(), todoTitle: todoTitleValue })
-
         e.target.reset();
     }
 
@@ -39,7 +35,6 @@ const Todos = ({ todoGroup, todoGroups, grpI, dragging, handleDragStart, handleD
 
         const restTodos = todoGroups[indexOfGroup].todoList.filter(todo => todo.id !== id);
         setTodos(restTodos);
-
         todoGroups[indexOfGroup].todoList.splice(0, todoGroups[indexOfGroup].todoList.length, ...restTodos)
     }
 
@@ -67,13 +62,17 @@ const Todos = ({ todoGroup, todoGroups, grpI, dragging, handleDragStart, handleD
                                     onDragEnter={(e) => dragging ? handleDragEnter(e, { grpI, todoI }) : null}
                                     onDoubleClick={() => setEditTodo(todo.id)}
                                 >
-                                    {isDraggable.includes(todo.id) &&
+                                    {isDraggable.includes(todo.id) ?
                                         <span className="todo__lock_indicator">
                                             <HiLockClosed size="12px" />
                                         </span>
+                                        :
+                                        <span className="todo__draggable_indicator">
+                                            <MdDragIndicator />
+                                        </span>
                                     }
 
-                                    {/*<<<<< Lock and Unlock Button >>>>>>>>> */}
+                                    {/* Lock and Unlock Button */}
                                     {isDraggable.includes(todo.id) ?
                                         <button className="todo__lock_btn" onClick={() => setIsDraggable((prev) => (prev.filter(id => id !== todo.id)))}>
                                             <VscLock />
@@ -82,20 +81,21 @@ const Todos = ({ todoGroup, todoGroups, grpI, dragging, handleDragStart, handleD
                                         <button className="todo__lock_btn" onClick={() => setIsDraggable((prev) => ([...prev, todo.id]))}>
                                             <VscUnlock />
                                         </button>
-
                                     }
 
                                     <p>{todo.todoTitle}</p>
 
-                                    {/*<<<<< Delete and Edit single todo Button >>>>>>>>> */}
+                                    {/* Delete and Edit single todo Button */}
                                     <button className="todo__action_btn" onClick={(e) => handleDeleteTodo(todo.id)}>
                                         <AiOutlineDelete />
                                     </button>
                                     <button className="todo__action_btn" onClick={() => setEditTodo(todo.id)}>
                                         <FiEdit />
                                     </button>
+
                                 </div>
                                 :
+                                // Edit todo
                                 <div className="todo_add__form_container">
                                     <form onSubmit={(e) => handleEditTodo(e, todo.id)} className="todo_add__form">
                                         <input type="text" defaultValue={todo.todoTitle} name="todo" className="todo_add__form_input" placeholder="Update title" required />
@@ -109,6 +109,7 @@ const Todos = ({ todoGroup, todoGroups, grpI, dragging, handleDragStart, handleD
                 })
             }
 
+            {/* Add new todo */}
             {
                 !isAddTodo ?
                     <button className="todo__add_btn" onClick={() => setIsAddTodo(true)}>

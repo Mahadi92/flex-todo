@@ -14,7 +14,7 @@ const GroupTodo = ({ todoGroups, setTodoGroups }) => {
     const dragItem = useRef();
     const dragNode = useRef();
 
-
+    // Drag start func
     const handleDragStart = (e, params) => {
         dragItem.current = params;
         dragNode.current = e.target;
@@ -23,6 +23,8 @@ const GroupTodo = ({ todoGroups, setTodoGroups }) => {
             setDragging(true);
         }, 0)
     }
+
+    // Drag end func
     const handleDragEnd = () => {
         setDragging(false);
         dragNode.current.removeEventListener('dragend', handleDragEnd)
@@ -30,6 +32,7 @@ const GroupTodo = ({ todoGroups, setTodoGroups }) => {
         dragNode.current = null;
     }
 
+    // Drag enter func 
     const handleDragEnter = (e, params) => {
         const currentItem = dragItem.current;
         if (e.target !== dragNode.current) {
@@ -60,6 +63,7 @@ const GroupTodo = ({ todoGroups, setTodoGroups }) => {
         const grpTitleValue = e.target.groupTodo.value
 
         setTodoGroups((prev) => [...prev, { id: (new Date()).getTime(), grpTitle: grpTitleValue, todoList: [] }]);
+
         e.target.reset();
     }
 
@@ -89,11 +93,12 @@ const GroupTodo = ({ todoGroups, setTodoGroups }) => {
                             className="grp_todo"
                             onDragEnter={dragging && !todoGroup.todoList.length ? (e) => handleDragEnter(e, { grpI, todoI: 0 }) : null}
                         >
+                            {/* Group edit and delete buttons */}
                             <button onClick={() => handleDeleteGroupTodo(todoGroup?.id)} className="grp_todo__delete_btn"><HiX /> </button>
                             <button onClick={() => setEditGroupTodo(todoGroup.id)} className="grp_todo__edit_btn"><FiEdit /> </button>
-                            {editGroupTodo === todoGroup.id ?
 
-                                // Update Group todo title
+                            {/*  Update Group todo title */}
+                            {editGroupTodo === todoGroup.id ?
                                 <div className="grp_todo__form_container">
                                     <form onSubmit={(e) => handleEditGroupTodo(e, todoGroup?.id, todoGroup?.todoList)} className="grp_todo__form">
                                         <input type="text" name="editGroupTodo" className="grp_todo__form_input" placeholder="Update group name" defaultValue={todoGroup.grpTitle} required />
@@ -102,18 +107,21 @@ const GroupTodo = ({ todoGroups, setTodoGroups }) => {
                                     </form>
                                 </div>
                                 :
-                                <div onDoubleClick={(e) => setEditGroupTodo(todoGroup.id)} className="grp_todo__title_container">
+                                <div onDoubleClick={(e) => setEditGroupTodo(todoGroup.id)} className="grp_todo__title_container" title="Double click to edit group">
                                     <span className="grp_todo__title">{todoGroup.grpTitle}</span>
-                                    <span className="grp_todo__length">{todoGroup.todoList.length}</span>
+                                    {/* <span className="grp_todo__length">{todoGroup.todoList.length}</span> */}
                                 </div>
-
                             }
+
+                            {/* Todos */}
                             <Todos todoGroup={todoGroup} todoGroups={todoGroups} grpI={grpI} dragging={dragging} setDragging={setDragging} handleDragStart={handleDragStart} handleDragEnter={handleDragEnter} dragStyles={dragStyles} />
+
                         </div>
                     )
                 })
             }
 
+            {/* Add group todo  */}
             {
                 !isAddGroup ?
                     <button onClick={() => setIsAddGroup(true)} className="grp_todo__add_btn">

@@ -2,13 +2,11 @@ import { useEffect, useState } from 'react';
 import GroupTodo from './components/GroupTodo';
 import './styles/global.scss';
 import './styles/style.scss';
+import './styles/groupTodo.scss';
+import './styles/singleTodo.scss';
 
 function App() {
   const [todoGroups, setTodoGroups] = useState([]);
-
-  useEffect(() => {
-
-  }, [])
 
   return (
     <main>
@@ -17,7 +15,6 @@ function App() {
           <GroupTodo todoGroups={todoGroups} setTodoGroups={setTodoGroups} />
         </div>
       </header>
-
     </main>
   );
 }

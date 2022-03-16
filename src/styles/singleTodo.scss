@@ -1,0 +1,191 @@
+@import "./variables.scss";
+
+// Todo add
+.todo__add_btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
+    margin-top: .5rem;
+    width: 100%;
+    border: none;
+    background: $color__primary_600;
+    border-radius: 5px;
+
+    svg{
+        color: $color__primary;
+    }
+
+    &:hover{
+        background: $color__light;
+    }
+}
+.todo__card{
+    width: 100%;
+    position: relative;
+    background: #FFF;
+    border-radius: 5px;
+    padding: 1rem 2rem;
+    margin: 0.5rem 0;
+    cursor: grab;
+
+    p{
+        user-drag: none;
+        -webkit-user-drag: none;
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+    }
+    
+    &:hover .todo__action_btn,
+    &:hover .todo__lock_btn{
+        transform:scale(1);
+    }
+}
+.current_todo__card{
+    background: $color__primary_400;
+    color: $color__primary_400;
+    cursor: grabbing;
+
+    button{
+        color: $color__primary_400;
+    }
+}
+.todo__action_btn{
+    width: 2rem;
+    height: 2rem;
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0.2rem;
+    border: none;
+    border-radius:5px;
+    margin: 0.5rem;
+    color: $color__danger;
+    background: $color__primary_600;
+    padding: 0.5rem;
+    transform:scale(0);
+    
+    &:hover{
+        background: $color__danger;
+        color: #fff;
+    }
+    &:last-child{
+        right: 2.5rem;
+        transform:scale(0);
+        color: $color__primary;
+        &:hover{
+            background: $color__primary;
+            color: #fff;
+        }
+    }
+}
+
+.todo__lock_btn{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    left: -1.3rem;
+    top: 0.6rem;
+    background: $color__primary_400;
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    border: 1px solid rgba( 255, 255, 255, 0.18 );
+    transform:scale(0);
+
+    svg{
+        color: $color__primary;
+    }
+    &:hover{
+        background: $color__primary;
+        svg{
+            color: #fff;
+        }
+    }
+}
+
+.todo__lock_indicator{
+    position: absolute;
+    top: -3px;
+    left: 0;
+    color: $color__gray;
+    border-radius: 50%;
+}
+.todo__draggable_indicator{
+    position: absolute;
+    left: 0.5rem;
+    top: 1.2rem;
+    color: $color__gray;
+}
+
+.todo_add__form_container{
+    @extend .todo__card;
+    display: flex;
+    align-items: center;
+    padding: .5rem; 
+    
+    .todo_add__form{
+        width: 90%;
+        display: flex;
+        align-items: center;
+        input{
+            width: 80%;
+            border: none;
+            padding: .5rem;
+        }
+        .todo_add__form_btn,
+        .todo__delete_btn,
+        button{
+            width: 30%;
+            height: 2rem;
+            display: block;
+            border: none;
+            border-radius:5px;
+            margin: 0 0.3rem;
+            color: $color__primary;
+            &:hover{
+                background: $color__primary;
+                color: #fff;
+            }
+        }
+        .todo__edit_form_btn{
+            min-width: 3.6rem;
+        }
+    }
+    .todo__edit_form_del_btn{
+        display: block;
+        border: none;
+        color: $color__primary;
+        height: 2rem;
+        padding: 0.2rem 0.2rem;
+        display: flex;
+        justify-content:center;
+        align-items:center;
+        border-radius:5px;
+
+        &:hover{
+            background: $color__primary;
+            color: #fff;
+        }
+    }
+
+    .todo__delete_btn{
+        width: 2rem;
+        height: 2rem;
+        display: block;
+        border: none;
+        border-radius:5px;
+        color: $color__danger;
+        background: $color__primary_600;
+        padding: 0.5rem;
+        
+        &:hover{
+            background: $color__danger;
+            color: #fff;
+        }
+    }
+}
